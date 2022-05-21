@@ -14,13 +14,13 @@ import com.anil.definelabsdemo.utils.MatchListner
 import com.google.android.material.card.MaterialCardView
 import java.time.temporal.ValueRange
 
-class AllMatchAdapter(private var venueList: MutableList<Venue> = mutableListOf(), val matchListner: MatchListner) : RecyclerView.Adapter<AllMatchAdapter.MyViewHolder>() {
+class AllMatchAdapter(private var venueList: MutableList<AllMatchedResponse> = mutableListOf(), val matchListner: MatchListner) : RecyclerView.Adapter<AllMatchAdapter.MyViewHolder>() {
 
     class MyViewHolder(private val binding: AllMatchedRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var imgStar: ImageView =  binding.imgStar
 
-        fun bind(result: Venue) {
+        fun bind(result: List<Venue>) {
             binding.txtId.text = result.id
             binding.txtName.text = result.name
         }
@@ -43,7 +43,7 @@ class AllMatchAdapter(private var venueList: MutableList<Venue> = mutableListOf(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentRecipe = venueList[position]
 
-        holder.bind(currentRecipe)
+        holder.bind(currentRecipe.response.venues)
 
         holder.imgStar.setOnClickListener {
             matchListner.matchListener(venueList[position])
@@ -55,6 +55,6 @@ class AllMatchAdapter(private var venueList: MutableList<Venue> = mutableListOf(
     }
 
     fun setData(newData: AllMatchedResponse){
-        venueList = newData.response.venues as MutableList<Venue>
+        venueList = newData as MutableList<AllMatchedResponse>
     }
 }

@@ -25,7 +25,7 @@ class AllMatchedFragment : Fragment() , MatchListner {
     private lateinit var mAdapter: AllMatchAdapter
     var allMatchedDataList: AllMatchedResponse? = null
     private lateinit var databaseHandler: DatabaseHandler
-    private var venueListData:MutableList<Venue> = mutableListOf()
+    private var venueListData:MutableList<AllMatchedResponse> = mutableListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
