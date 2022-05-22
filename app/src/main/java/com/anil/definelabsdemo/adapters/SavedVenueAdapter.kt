@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anil.definelabsdemo.R
@@ -42,6 +43,7 @@ class SavedVenueAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val venue = venueList?.get(position)
+        holder.imgStar.setColorFilter(ContextCompat.getColor(context, R.color.grey))
 
         if (venue != null) {
             holder.bind(venue, context)

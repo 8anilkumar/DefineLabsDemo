@@ -17,6 +17,8 @@ class AllMatchAdapter(
     private var venueList: MutableList<Venue>? = mutableListOf(),
     val matchListner: MatchListner) : RecyclerView.Adapter<AllMatchAdapter.MyViewHolder>() {
 
+    private var venueStoredList: MutableList<Venue>? = mutableListOf()
+
     class MyViewHolder(private val binding: AllMatchedRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var imgStar: ImageView = binding.imgStar
@@ -45,10 +47,21 @@ class AllMatchAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val venue = venueList?.get(position)
+        holder.imgStar.setColorFilter(ContextCompat.getColor(context, R.color.grey))
 
-        if (venue != null) {
-            holder.bind(context, venue)
+        venue?.let{ venueData->
+            for (venu in venueStoredList!!){
+                if(venueData.id == venu.id){
+                    holder.bind(context, Venue(venueData.id, venueData.name,true))
+                } else {
+                   holder.bind(context, Venue(venueData.id, venueData.name,false))
+                }
+            }
         }
+
+//        if (venue != null) {
+//            holder.bind(context, venue)
+//        }
 
         holder.imgStar.setOnClickListener {
             venueList?.let {
@@ -62,26 +75,8 @@ class AllMatchAdapter(
     }
 
     fun setData(newData: VenueResponse, venueListData: MutableList<Venue>) {
-
         venueList = newData.venues as MutableList<Venue>
-
-//        venueListData.let {
-//            if (it.isNotEmpty()) {
-//                val venueListData: MutableList<Venue> = mutableListOf()
-//                venueList?.forEach {
-//                    if (it.isStarred) {
-//                        venueListData.add(Venue(venueList!![0].id,venueList!![0].name,true))
-//                    } else {
-//                        venueListData.add(Venue(venueList!![0].id,venueList!![0].name,false))
-//                    }
-//                }
-//                venueList = venueListData
-//            }
-//
-//        }
-
-
-
+        venueStoredList = venueListData
         notifyDataSetChanged()
     }
 }

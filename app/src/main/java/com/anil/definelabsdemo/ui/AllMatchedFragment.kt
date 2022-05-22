@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +24,6 @@ class AllMatchedFragment : Fragment() , MatchListner {
     private lateinit var mainViewModel: AllMatchedViewModel
     private lateinit var mAdapter: AllMatchAdapter
     private lateinit var databaseHandler: DatabaseHandler
-    //private var venueData:MutableList<Venue> = mutableListOf()
     private var venueResponseData: VenueResponse?=null
     private var venueListData:MutableList<Venue> = mutableListOf()
 
@@ -76,5 +76,9 @@ class AllMatchedFragment : Fragment() , MatchListner {
 
     override fun matchListener(venue: Venue) {
         databaseHandler.matchInterface()?.addAllMatched(venue)
+        mAdapter.notifyDataSetChanged()
+        requestApiData()
+        Toast.makeText(binding?.root?.context,"Venue Add successful!", Toast.LENGTH_SHORT).show()
+
     }
 }

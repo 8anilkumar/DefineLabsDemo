@@ -6,7 +6,7 @@ import com.anil.definelabsdemo.utils.Constants
 
 @Entity(tableName = Constants.VENUE_TABLE)
 data class Venue(
-    val id: String,
+    var id: String,
     val name: String,
     val isStarred: Boolean){
     @PrimaryKey(autoGenerate = true)

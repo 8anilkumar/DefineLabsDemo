@@ -89,6 +89,6 @@ class SavedMatchedFragment : Fragment() , MatchListner {
         databaseHandler.matchInterface()?.deleteFavoriteVenue(venueList)
         retrieveMatchList()
         mAdapter.notifyDataSetChanged()
-        Toast.makeText(binding?.root?.context,"Venue Delete successfull!",Toast.LENGTH_SHORT).show()
+        Toast.makeText(binding?.root?.context,"Venue Delete successful!",Toast.LENGTH_SHORT).show()
     }
 }
