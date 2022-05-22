@@ -38,11 +38,15 @@ class AllMatchedFragment : Fragment() , MatchListner {
         binding = FragmentAllMatchedBinding.inflate(inflater, container, false)
 
         setupRecyclerView()
-        requestApiData()
         setUpDB()
+
         return binding?.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        requestApiData()
+    }
     private fun setUpDB() {
         databaseHandler =
             Room.databaseBuilder(requireContext(), DatabaseHandler::class.java, Constants.VENUE_TABLE)
@@ -56,14 +60,24 @@ class AllMatchedFragment : Fragment() , MatchListner {
     }
 
      fun requestApiData() {
+        binding?.mainProgressBar?.visibility = View.VISIBLE
         mainViewModel.callApiToGetVenues()
         mainViewModel.getVenues().observe(viewLifecycleOwner) { response ->
             if (response != null) {
+                binding?.mainProgressBar?.visibility = View.GONE
                 venueResponseData = response
                 venueResponseData?.let { venues->
-                    venueListData = databaseHandler.matchInterface()?.getAllMatch() as MutableList<Venue>
-                    mAdapter.setData(venues,venueListData)
-                    mAdapter.notifyDataSetChanged()
+                    if(venues.venues.isNotEmpty()){
+                        binding?.recyclerview?.visibility = View.VISIBLE
+                        binding?.tvNoMatch?.visibility = View.GONE
+
+                        venueListData = databaseHandler.matchInterface()?.getAllMatch() as MutableList<Venue>
+                        mAdapter.setData(venues,venueListData)
+                        mAdapter.notifyDataSetChanged()
+                    } else {
+                        binding?.recyclerview?.visibility = View.GONE
+                        binding?.tvNoMatch?.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -79,6 +93,5 @@ class AllMatchedFragment : Fragment() , MatchListner {
         mAdapter.notifyDataSetChanged()
         requestApiData()
         Toast.makeText(binding?.root?.context,"Venue Add successful!", Toast.LENGTH_SHORT).show()
-
     }
 }

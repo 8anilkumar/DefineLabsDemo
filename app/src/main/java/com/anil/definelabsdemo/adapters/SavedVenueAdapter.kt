@@ -13,6 +13,7 @@ import com.anil.definelabsdemo.models.Venue
 import com.anil.definelabsdemo.utils.MatchListner
 
 class SavedVenueAdapter(
+
     val context: Context, private var venueList: MutableList<Venue>? = mutableListOf(),
     val matchListner: MatchListner) : RecyclerView.Adapter<SavedVenueAdapter.MyViewHolder>() {
 

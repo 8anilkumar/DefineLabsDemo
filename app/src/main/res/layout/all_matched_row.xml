@@ -33,29 +33,33 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/txtId"
+                    android:id="@+id/txtName"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:text="id" />
+                    android:text="Anil kumar"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginEnd="10dp"/>
 
                 <ImageView
                     android:id="@+id/imgStar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_star" />
+                    android:src="@drawable/ic_star"/>
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/txtName"
-                android:layout_width="match_parent"
+                android:id="@+id/txtId"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:text="Anil kumar"
-                android:layout_marginTop="10dp" />
+                android:text="id"
+                android:textSize="14sp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 

@@ -62,7 +62,7 @@ class SavedMatchedFragment : Fragment() , MatchListner {
 
                 mAdapter.setData(venueList)
 
-            }else{
+            } else {
                 binding?.recyclerview?.visibility = View.GONE
                 binding?.tvNoMatch?.visibility = View.VISIBLE
             }

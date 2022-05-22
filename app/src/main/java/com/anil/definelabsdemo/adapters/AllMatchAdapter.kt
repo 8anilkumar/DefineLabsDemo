@@ -38,7 +38,6 @@ class AllMatchAdapter(
                 return MyViewHolder(binding)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -49,13 +48,17 @@ class AllMatchAdapter(
         val venue = venueList?.get(position)
         holder.imgStar.setColorFilter(ContextCompat.getColor(context, R.color.grey))
 
-        venue?.let{ venueData->
-            for (venu in venueStoredList!!){
-                if(venueData.id == venu.id){
-                    holder.bind(context, Venue(venueData.id, venueData.name,true))
-                } else {
-                   holder.bind(context, Venue(venueData.id, venueData.name,false))
+        venue?.let { venueData->
+            if(venueStoredList?.size != 0 ){
+                for (venu in venueStoredList!!){
+                    if(venueData.id == venu.id){
+                        holder.bind(context, Venue(venueData.id, venueData.name,true))
+                    } else {
+                        holder.bind(context, Venue(venueData.id, venueData.name,false))
+                    }
                 }
+            } else {
+                holder.bind(context, Venue(venueData.id, venueData.name,false))
             }
         }
 

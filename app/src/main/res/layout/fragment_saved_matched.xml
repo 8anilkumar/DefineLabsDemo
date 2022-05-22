@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     tools:context=".ui.SavedMatchedFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -23,8 +24,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="No Match found!"
+        android:text="No Match found! "
         android:textSize="24sp"
-        />
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
