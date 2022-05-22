@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.anil.definelabsdemo.models.AllMatchedResponse
+import com.anil.definelabsdemo.models.AllMatchedData
+import com.anil.definelabsdemo.models.Venue
+import com.anil.definelabsdemo.models.VenueResponse
 import com.anil.definelabsdemo.utils.ApiInterface
-import com.anil.definelabsdemo.utils.Contants
+import com.anil.definelabsdemo.utils.Constants
 import com.anil.definelabsdemo.utils.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,18 +16,19 @@ import retrofit2.Response
 
 class MatchRepository(val context: Context?){
 
-    fun getAllMatchedData(): MutableLiveData<AllMatchedResponse?> {
+    fun getVenueList(): MutableLiveData<VenueResponse>? {
 
-        val responseData: MutableLiveData<AllMatchedResponse?> = MutableLiveData<AllMatchedResponse?>()
-        val apiService: ApiInterface? = RetrofitClient.getClient(Contants.BASE_URL)?.create(ApiInterface::class.java)
-        val call: Call<AllMatchedResponse?>? = apiService?.getAllMatched()
-        call?.enqueue(object : Callback<AllMatchedResponse?> {
-            override fun onResponse(call: Call<AllMatchedResponse?>, response: Response<AllMatchedResponse?>) {
+        val venueList: MutableLiveData<VenueResponse>? = MutableLiveData<VenueResponse>()
+
+        val apiService: ApiInterface? = RetrofitClient.getClient(Constants.BASE_URL)?.create(ApiInterface::class.java)
+        val call: Call<AllMatchedData?>? = apiService?.getAllMatched()
+        call?.enqueue(object : Callback<AllMatchedData?> {
+            override fun onResponse(call: Call<AllMatchedData?>, response: Response<AllMatchedData?>) {
                 Log.v("viewModel", response.toString())
                 if (response.code() == 200) {
-                    responseData.value = response.body()
+
+                    venueList?.value = response.body()?.response
                 } else if (response.code() == 422 || response.code() == 500) {
-                   // errorMessage.postValue(response.message())
                     Toast.makeText(context,""+response.message(),Toast.LENGTH_SHORT).show()
                 } else {
                    // errorMessage.postValue("Something Went Wrong")
@@ -34,11 +37,11 @@ class MatchRepository(val context: Context?){
                 }
             }
 
-            override fun onFailure(call: Call<AllMatchedResponse?>, throwable: Throwable) {
+            override fun onFailure(call: Call<AllMatchedData?>, throwable: Throwable) {
                 Log.e("viewModel", throwable.toString())
             }
         })
 
-        return responseData
+        return venueList
     }
 }

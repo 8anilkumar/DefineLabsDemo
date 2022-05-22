@@ -9,19 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anil.definelabsdemo.R
 import com.anil.definelabsdemo.databinding.AllMatchedRowBinding
 import com.anil.definelabsdemo.models.Venue
-import com.anil.definelabsdemo.models.VenueResponse
 import com.anil.definelabsdemo.utils.MatchListner
 
-class AllMatchAdapter(
-    private val context: Context,
-    private var venueList: MutableList<Venue>? = mutableListOf(),
-    val matchListner: MatchListner) : RecyclerView.Adapter<AllMatchAdapter.MyViewHolder>() {
+class SavedVenueAdapter(
+    val context: Context, private var venueList: MutableList<Venue>? = mutableListOf(),
+    val matchListner: MatchListner) : RecyclerView.Adapter<SavedVenueAdapter.MyViewHolder>() {
 
     class MyViewHolder(private val binding: AllMatchedRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var imgStar: ImageView = binding.imgStar
 
-        fun bind(context: Context, result: Venue) {
+        fun bind(result: Venue, context: Context) {
             binding.txtId.text = result.id
             binding.txtName.text = result.name
             if (result.isStarred) {
@@ -36,7 +34,6 @@ class AllMatchAdapter(
                 return MyViewHolder(binding)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -47,12 +44,12 @@ class AllMatchAdapter(
         val venue = venueList?.get(position)
 
         if (venue != null) {
-            holder.bind(context, venue)
+            holder.bind(venue, context)
         }
 
         holder.imgStar.setOnClickListener {
-            venueList?.let {
-                matchListner.matchListener(Venue(it[position].id, it[position].name, true))
+            if (venue != null) {
+                matchListner.matchListener(venue)
             }
         }
     }
@@ -61,27 +58,9 @@ class AllMatchAdapter(
         return venueList?.size ?: 0
     }
 
-    fun setData(newData: VenueResponse, venueListData: MutableList<Venue>) {
-
-        venueList = newData.venues as MutableList<Venue>
-
-//        venueListData.let {
-//            if (it.isNotEmpty()) {
-//                val venueListData: MutableList<Venue> = mutableListOf()
-//                venueList?.forEach {
-//                    if (it.isStarred) {
-//                        venueListData.add(Venue(venueList!![0].id,venueList!![0].name,true))
-//                    } else {
-//                        venueListData.add(Venue(venueList!![0].id,venueList!![0].name,false))
-//                    }
-//                }
-//                venueList = venueListData
-//            }
-//
-//        }
-
-
-
+    fun setData(newData: MutableList<Venue>) {
+        venueList = newData
         notifyDataSetChanged()
     }
+
 }

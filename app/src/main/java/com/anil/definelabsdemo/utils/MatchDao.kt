@@ -1,18 +1,17 @@
 package com.anil.definelabsdemo.utils
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import com.anil.definelabsdemo.models.AllMatchedResponse
-import com.anil.definelabsdemo.models.MatchResponse
+import androidx.room.*
 import com.anil.definelabsdemo.models.Venue
 
 @Dao
 interface MatchDao {
 
-    @Query("SELECT * FROM MATCH_TABLE")
-    fun getAllMatch(): List<AllMatchedResponse>
+    @Query("SELECT * FROM venue_table")
+    fun getAllMatch(): List<Venue>
 
-    @Insert
-    fun addAllMatched(addMatched: AllMatchedResponse)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addAllMatched(addMatched: Venue)
+
+    @Delete
+    fun deleteFavoriteVenue(venue: Venue)
 }

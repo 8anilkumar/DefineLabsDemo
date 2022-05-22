@@ -3,20 +3,24 @@ package com.anil.definelabsdemo.viewModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.anil.definelabsdemo.models.AllMatchedResponse
+import com.anil.definelabsdemo.models.Venue
+import com.anil.definelabsdemo.models.VenueResponse
 import com.anil.definelabsdemo.repository.MatchRepository
 
 class AllMatchedViewModel (application: Application?) : AndroidViewModel(application!!) {
 
     private var repository: MatchRepository = MatchRepository(application)
 
-    lateinit var allMatchedResponse: MutableLiveData<AllMatchedResponse?>
+     var venueList: MutableLiveData<VenueResponse> = MutableLiveData<VenueResponse>()
 
-    fun callApiForGetAllMatchedData() {
-        allMatchedResponse = repository.getAllMatchedData()
+    fun callApiToGetVenues() {
+        repository.getVenueList()?.let { venues->
+
+            venueList = venues
+        }
     }
 
-    fun getAllMatchedData(): MutableLiveData<AllMatchedResponse?> {
-        return allMatchedResponse
+    fun getVenues(): MutableLiveData<VenueResponse> {
+        return venueList
     }
 }
